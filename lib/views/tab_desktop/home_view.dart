@@ -79,6 +79,7 @@ class _Body extends StatelessWidget {
 }
 
 class _Search extends StatelessWidget {
+  TextEditingController searchTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -101,19 +102,22 @@ class _Search extends StatelessWidget {
           const Icon(Icons.search_outlined),
           UIHelper.horizontalSpaceMedium(),
           Expanded(
-            child: TextField(
-              
-            )
-           /*
-            child: Text(
-              'What would you like to eat?',
-              style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            */
-          ),
+              child: TextField(
+            controller: searchTextController,
+            decoration: const InputDecoration(
+                hintText: "What would you like to eat?",
+                border: InputBorder.none),
+          )
+
+              // child: Text(
+              //   'What would you like to eat?',
+              //   style: Theme.of(context).textTheme.subtitle1!.copyWith(
+              //         color: Colors.grey[700],
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              // ),
+
+              ),
           UIHelper.horizontalSpaceMedium(),
           const Icon(Icons.filter_list_outlined)
         ],
