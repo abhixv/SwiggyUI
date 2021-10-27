@@ -101,6 +101,10 @@ class _Search extends StatelessWidget {
           const Icon(Icons.search_outlined),
           UIHelper.horizontalSpaceMedium(),
           Expanded(
+            child: TextField(
+              
+            )
+           /*
             child: Text(
               'What would you like to eat?',
               style: Theme.of(context).textTheme.subtitle1!.copyWith(
@@ -108,6 +112,7 @@ class _Search extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
             ),
+            */
           ),
           UIHelper.horizontalSpaceMedium(),
           const Icon(Icons.filter_list_outlined)
