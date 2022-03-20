@@ -1,29 +1,21 @@
-import 'dart:convert';
-
-VerifyOtp verifyOtpFromJson(String str) => VerifyOtp.fromJson(json.decode(str));
-
-String verifyOtpToJson(VerifyOtp data) => json.encode(data.toJson());
-
 class VerifyOtp {
-  VerifyOtp({
-    required this.message,
-    required this.token,
-    required this.isNewUser,
-  });
+  String? message;
+  String? token;
+  bool? isNewUser;
 
-  String message;
-  String token;
-  bool isNewUser;
+  VerifyOtp({this.message, this.token, this.isNewUser});
 
-  factory VerifyOtp.fromJson(Map<String, dynamic> json) => VerifyOtp(
-        message: json["message"],
-        token: json["token"],
-        isNewUser: json["isNewUser"],
-      );
+  VerifyOtp.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    token = json['token'];
+    isNewUser = json['isNewUser'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "message": message,
-        "token": token,
-        "isNewUser": isNewUser,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['message'] = this.message;
+    data['token'] = this.token;
+    data['isNewUser'] = this.isNewUser;
+    return data;
+  }
 }

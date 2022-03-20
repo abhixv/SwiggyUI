@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swiggy_ui/services/authenticate.dart';
 import 'package:swiggy_ui/views/mobile/login/login_page_helper.dart';
+import 'package:swiggy_ui/views/mobile/verifyotp/verifyotp_page_helper.dart';
 import 'package:swiggy_ui/views/tab_desktop/tab_screen.dart';
 import 'package:provider/provider.dart';
 import 'shared/app_theme.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LoginPageHelper()),
         ChangeNotifierProvider(create: (_) => Authentication()),
+        ChangeNotifierProvider(create: (_) => VerifyOtpPageHelper()),
       ],
       child: MaterialApp(
         title: 'SwiggyUI',

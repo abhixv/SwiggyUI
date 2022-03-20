@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:swiggy_ui/constants.dart';
 import 'package:swiggy_ui/models/auth/verifyotp_model.dart';
 import 'package:swiggy_ui/views/mobile/home_bottom_navigation_screen.dart';
+import 'package:swiggy_ui/views/mobile/verifyotp/verifyotp_page.dart';
 
 class Authentication with ChangeNotifier {
   Future<void> login(
@@ -23,21 +24,23 @@ class Authentication with ChangeNotifier {
           Navigator.push(
               context,
               PageTransition(
-                  child: const HomeBottomNavigationScreen(),
+                  child: VerifyOtpPage(
+                    phoneController: phoneNumberController,
+                  ),
                   type: PageTransitionType.fade));
         }
       } catch (e) {
         print(e);
       }
-    } else {}
+    }
   }
 
-  static Future<VerifyOtp> verifyOtp(TextEditingController otpController,
+  Future<VerifyOtp> verifyOtp(TextEditingController otpController,
       TextEditingController phoneNumberController, BuildContext context) async {
     var verifyOtp = null;
     if (otpController.text.isNotEmpty) {
       try {
-        var url = Uri.parse('https://$baseUrl/user/verify-otp');
+        var url = Uri.parse('https://$baseUrl/api/users/auth/verifyOTP');
         var response = await http.post(url,
             body: ({
               'phoneCode': '+91',
@@ -49,6 +52,7 @@ class Authentication with ChangeNotifier {
           var jsonString = response.body;
           var jsonMap = json.decode(jsonString);
           verifyOtp = VerifyOtp.fromJson(jsonMap);
+
           Navigator.pushReplacement(
               context,
               PageTransition(
@@ -59,8 +63,6 @@ class Authentication with ChangeNotifier {
       } catch (e) {
         print(e);
       }
-    } else {
-      return verifyOtp;
     }
     return verifyOtp;
   }
