@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:http/http.dart' as http;
 import 'package:swiggy_ui/constants.dart';
+import 'package:swiggy_ui/models/auth/verifyotp_model.dart';
 import 'package:swiggy_ui/views/mobile/home_bottom_navigation_screen.dart';
 
 class Authentication with ChangeNotifier {
@@ -27,5 +30,38 @@ class Authentication with ChangeNotifier {
         print(e);
       }
     } else {}
+  }
+
+  static Future<VerifyOtp> verifyOtp(TextEditingController otpController,
+      TextEditingController phoneNumberController, BuildContext context) async {
+    var verifyOtp = null;
+    if (otpController.text.isNotEmpty) {
+      try {
+        var url = Uri.parse('https://$baseUrl/user/verify-otp');
+        var response = await http.post(url,
+            body: ({
+              'phoneCode': '+91',
+              'phoneNumber': phoneNumberController.text,
+              'otp': otpController.text
+            }));
+        if (response.statusCode == 200) {
+          print(response.body);
+          var jsonString = response.body;
+          var jsonMap = json.decode(jsonString);
+          verifyOtp = VerifyOtp.fromJson(jsonMap);
+          Navigator.pushReplacement(
+              context,
+              PageTransition(
+                  type: PageTransitionType.leftToRight,
+                  child: const HomeBottomNavigationScreen()));
+          return verifyOtp;
+        }
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      return verifyOtp;
+    }
+    return verifyOtp;
   }
 }
